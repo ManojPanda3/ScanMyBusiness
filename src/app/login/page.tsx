@@ -29,6 +29,8 @@ const LoginPage = () => {
       if (res.ok) {
         const form = e.target as HTMLFormElement;
         form.reset();
+        const body = await res.json()
+        localStorage.setItem('userData', JSON.stringify(body.user))
         router.push('/dashboard');
       } else {
         const { error } = await res.json();
