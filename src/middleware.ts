@@ -31,10 +31,10 @@ export async function middleware(request: NextRequest) {
   if (refreshToken) {
     const decoded = await verifyRefreshToken(refreshToken);
     if (decoded) {
-      const newAccessToken = await generateAccessToken({ id: (decoded as { userId: number }).userId });
+      const newAccessToken = await generateAccessToken({ id: (decoded.payload as { userId: number }).userId });
       if (!newAccessToken) return NextResponse.json({ message: "Unable to generate refresh token." }, { status: 500 })
       const response = NextResponse.next();
-      response.headers.set('X-CURRENT-USER-ID', (decoded as { userId: number }).userId.toString());
+      response.headers.set('X-CURRENT-USER-ID', (decoded, payload as { userId: number }).userId.toString());
       return response;
     }
   }
