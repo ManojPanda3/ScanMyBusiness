@@ -1,14 +1,19 @@
-
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { isLoggedIn } from '@/lib/user';
+import { ClientAuthProvider } from '@/hooks/AuthProvider';
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = async ({ children }: { children: React.ReactNode }) => {
+  const userLoggedIn = await isLoggedIn()
+  console.log(userLoggedIn)
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow">{children}</main>
-      <Footer />
-    </div>
+    <ClientAuthProvider isLoggedIn={userLoggedIn}>
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-grow">{children}</main>
+        <Footer />
+      </div>
+    </ClientAuthProvider>
   );
 };
 

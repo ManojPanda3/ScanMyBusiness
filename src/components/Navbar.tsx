@@ -1,7 +1,12 @@
+'use client'
 
+import { useClientAuth } from '@/hooks/AuthProvider';
+import { User } from 'lucide-react';
 import Link from 'next/link';
 
 const Navbar = () => {
+  const { loggedIn } = useClientAuth();
+
   return (
     <nav className="navbar bg-base-100">
       <div className="flex-1">
@@ -17,12 +22,14 @@ const Navbar = () => {
           <li>
             <Link href="/contact">Contact</Link>
           </li>
-          <li>
-            <Link href="/login">Login</Link>
-          </li>
-          <li>
-            <Link href="/signup">Signup</Link>
-          </li>
+          {loggedIn ? (<User />) : (<>
+            <li>
+              <Link href="/login">Login</Link>
+            </li>
+            <li>
+              <Link href="/signup">Signup</Link>
+            </li>
+          </>)}
         </ul>
       </div>
     </nav>
