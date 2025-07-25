@@ -9,10 +9,32 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
+  id        Int         @id @default(autoincrement())
+  email     String      @unique
   name      String?
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  Researchs Researchs[]
+}
+
+model Researchs {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  User   User @relation(fields: [userId], references: [id])
+
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  businessDetailsId Int
+  BusinessDetails   BusinessDetails @relation(fields: [businessDetailsId], references: [id])
+}
+
+model BusinessDetails {
+  id       Int      @id @default(autoincrement())
+  location String?
+  range    Int      @default(8)
+  category String[]
+
+  researchId Int
+  Researchs  Researchs[]
 }
