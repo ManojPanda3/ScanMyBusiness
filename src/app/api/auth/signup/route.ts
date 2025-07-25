@@ -1,8 +1,6 @@
-
 import { PrismaClient } from '@/generated/prisma/client';
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
-import { generateAccessToken, generateRefreshToken } from '@/lib/jwt';
 
 const prisma = new PrismaClient();
 
@@ -33,6 +31,7 @@ export async function POST(request: Request) {
         password: hashedPassword,
       },
     });
+    if (!user) throw new Error("Unable to create user on database")
 
     const response = NextResponse.json({ success: true, status: 200 });
 

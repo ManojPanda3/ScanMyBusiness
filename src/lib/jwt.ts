@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import { SignJWT, jwtVerify } from 'jose';
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET ?? 'your-access-token-secret';
@@ -21,7 +20,6 @@ export const generateAccessToken = async (user: { id: number }): Promise<string 
 
 export const generateRefreshToken = async (user: { id: number }): Promise<string | null> => {
   try {
-    const secret = new TextEncoder().encode(REFRESH_TOKEN_SECRET)
     return await new SignJWT({ userId: user.id })
       .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()

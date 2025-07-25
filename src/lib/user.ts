@@ -20,7 +20,8 @@ export async function getUser() {
     const user = await prisma.user.findUniqueOrThrow({ where: { id: Number(userId) }, select: { name: true, email: true } })
     return user
   } catch (error) {
-    return null
+    if (process.env.NODE_ENV !== "production") console.error("while geting user detils", error.message)
+    return false
   }
 }
 
@@ -36,6 +37,7 @@ export async function isLoggedIn() {
     if (decode.payload.exp * 1000 < Date.now()) return false
     return true
   } catch (error) {
+    if (process.env.NODE_ENV !== "production") console.error("while geting user detils", error.message)
     return false
   }
 }

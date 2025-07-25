@@ -36,6 +36,8 @@ const SignupPage = () => {
         setError(error);
       }
     } catch (error) {
+      console.error("Something went wrong while creating account")
+      console.error(error)
       setError('Something went wrong.');
     }
   };
